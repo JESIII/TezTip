@@ -15,7 +15,7 @@ type ButtonProps = {
   setWallet: Dispatch<SetStateAction<any>>;
   setUserAddress: Dispatch<SetStateAction<string>>;
   setUserBalance: Dispatch<SetStateAction<number>>;
-  setStorage: Dispatch<SetStateAction<number>>;
+  setStorage: Dispatch<SetStateAction<string>>;
   contractAddress: string;
   setBeaconConnection: Dispatch<SetStateAction<boolean>>;
   setPublicToken: Dispatch<SetStateAction<string | null>>;
@@ -46,7 +46,7 @@ const ConnectButton = ({
     console.log(contract.storage)
     const storage: any = await contract.storage();
     setContract(contract);
-    setStorage(storage);
+    setStorage(JSON.stringify(storage));
   };
 
   const connectWallet = async (): Promise<void> => {

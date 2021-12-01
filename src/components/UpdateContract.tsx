@@ -6,7 +6,7 @@ interface UpdateContractProps {
   setUserBalance: Dispatch<SetStateAction<any>>;
   Tezos: TezosToolkit;
   userAddress: string;
-  setStorage: Dispatch<SetStateAction<number>>;
+  setStorage: Dispatch<SetStateAction<string>>;
 }
 
 const UpdateContract = ({ contract, setUserBalance, Tezos, userAddress, setStorage }: UpdateContractProps) => {
@@ -19,7 +19,7 @@ const UpdateContract = ({ contract, setUserBalance, Tezos, userAddress, setStora
       const op = await contract.methods.Change_Donee('tz1i1obBJZNmMjQXHocSQwxezcSAuWYyp9cp').send();
       await op.confirmation();
       const newStorage: any = await contract.storage();
-      if (newStorage) setStorage(newStorage.toNumber());
+      if (newStorage) setStorage(JSON.stringify(newStorage));
       setUserBalance(await Tezos.tz.getBalance(userAddress));
     } catch (error) {
       console.log(error);
@@ -53,7 +53,7 @@ const UpdateContract = ({ contract, setUserBalance, Tezos, userAddress, setStora
           </span>
         ) : (
           <span>
-            <i className="fas fa-plus"></i>&nbsp; Increment by 1
+            <i className="fas fa-plus"></i>&nbsp; Change donee
           </span>
         )}
       </button>
@@ -64,7 +64,7 @@ const UpdateContract = ({ contract, setUserBalance, Tezos, userAddress, setStora
           </span>
         ) : (
           <span>
-            <i className="fas fa-minus"></i>&nbsp; Decrement by 1
+            <i className="fas fa-minus"></i>&nbsp; Change min donation
           </span>
         )}
       </button>

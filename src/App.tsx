@@ -24,11 +24,11 @@ const App = () => {
   const [wallet, setWallet] = useState<any>(null);
   const [userAddress, setUserAddress] = useState<string>("");
   const [userBalance, setUserBalance] = useState<number>(0);
-  const [storage, setStorage] = useState<number>(0);
+  const [storage, setStorage] = useState<string>("");
   const [copiedPublicToken, setCopiedPublicToken] = useState<boolean>(false);
   const [beaconConnection, setBeaconConnection] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>("transfer");
-
+  const contractData = JSON.parse(storage);
   const contractAddress: string = "KT1XJWY8CWSsSP558Kp8nz65sTPh7pdjFiN4";
 
   const generateQrCode = (): { __html: string } => {
@@ -44,7 +44,7 @@ const App = () => {
       <div className="main-box">
         <h1>TezTip</h1>
         <div id="dialog">
-          <header>Try the Taquito Boilerplate App!</header>
+          <header>Welcome to TezTip!</header>
           <div id="content">
             <p className="text-align-center">
               <i className="fas fa-broadcast-tower"></i>&nbsp; Connecting to
@@ -98,21 +98,21 @@ const App = () => {
             className={activeTab === "transfer" ? "active" : ""}
             onClick={() => setActiveTab("transfer")}
           >
-            Make a transfer
+            Donate
           </div>
           <div
             id="contract"
             className={activeTab === "contract" ? "active" : ""}
             onClick={() => setActiveTab("contract")}
           >
-            Interact with a contract
+            Dashboard
           </div>
         </div>
         <div id="dialog">
           <div id="content">
             {activeTab === "transfer" ? (
               <div id="transfers">
-                <h3 className="text-align-center">Make a transfer</h3>
+                <h3 className="text-align-center">Donate</h3>
                 <Transfers
                   Tezos={Tezos}
                   setUserBalance={setUserBalance}
@@ -122,7 +122,9 @@ const App = () => {
             ) : (
               <div id="increment-decrement">
                 <h3 className="text-align-center">
-                  Current donee <span>{storage}</span>
+                  Current donee: <span>{contractData['donee']}</span><br/>
+                  Current minimum donation: <span>{contractData['min_donation']/1000000}ꜩ</span><br/>
+                  Donations: <span>{contractData['donations']}</span>
                 </h3>
                 <UpdateContract
                   contract={contract}
@@ -170,31 +172,14 @@ const App = () => {
     return (
       <div className="main-box">
         <div className="title">
-          <h1>Taquito Boilerplate</h1>
-          <a href="https://app.netlify.com/start/deploy?repository=https://github.com/ecadlabs/taquito-boilerplate">
-            <img
-              src="https://www.netlify.com/img/deploy/button.svg"
-              alt="netlify-button"
-            />
-          </a>
+          <h1>TezTip</h1>
         </div>
         <div id="dialog">
-          <header>Welcome to Taquito Boilerplate App!</header>
+          <header>Welcome to TezTip!</header>
           <div id="content">
             <p>Hello!</p>
             <p>
-              This is a template Tezos dApp built using Taquito. It's a starting
-              point for you to hack on and build your own dApp for Tezos.
-              <br />
-              If you have not done so already, go to the{" "}
-              <a
-                href="https://github.com/ecadlabs/taquito-boilerplate"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Taquito boilerplate Github page
-              </a>{" "}
-              and click the <em>"Use this template"</em> button.
+              This dapp is made for streamers to accept decentralized donations!
             </p>
             <p>Go forth and Tezos!</p>
           </div>
