@@ -28,9 +28,7 @@ const App = () => {
   const [copiedPublicToken, setCopiedPublicToken] = useState<boolean>(false);
   const [beaconConnection, setBeaconConnection] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>("transfer");
-  const contractData = JSON.parse(storage);
   const contractAddress: string = "KT1XJWY8CWSsSP558Kp8nz65sTPh7pdjFiN4";
-
   const generateQrCode = (): { __html: string } => {
     const qr = qrcode(0, "L");
     qr.addData(publicToken || "");
@@ -122,9 +120,9 @@ const App = () => {
             ) : (
               <div id="increment-decrement">
                 <h3 className="text-align-center">
-                  Current donee: <span>{contractData['donee']}</span><br/>
-                  Current minimum donation: <span>{contractData['min_donation']/1000000}ꜩ</span><br/>
-                  Donations: <span>{contractData['donations']}</span>
+                  Current donee: <span>{JSON.parse(storage)['donee']}</span><br/>
+                  Current minimum donation: <span>{JSON.parse(storage)['min_donation']/1000000}ꜩ</span><br/>
+                  Donations: <span>{JSON.parse(storage)['donations']}</span>
                 </h3>
                 <UpdateContract
                   contract={contract}
