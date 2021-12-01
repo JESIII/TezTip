@@ -17,7 +17,7 @@ enum BeaconConnection {
 
 const App = () => {
   const [Tezos, setTezos] = useState<TezosToolkit>(
-    new TezosToolkit("https://hangzhounet.api.tez.ie")
+    new TezosToolkit("https://mainnet.api.tez.ie")
   );
   const [contract, setContract] = useState<any>(undefined);
   const [publicToken, setPublicToken] = useState<string | null>("");
@@ -29,10 +29,7 @@ const App = () => {
   const [beaconConnection, setBeaconConnection] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>("transfer");
 
-  // Granadanet Increment/Decrement contract
-  // const contractAddress: string = "KT1K3XVNzsmur7VRgY8CAHPUENaErzzEpe4e";
-  // Hangzhounet Increment/Decrement contract
-  const contractAddress: string = "KT1WiPWNcBMcXJButkkvroRGkzs45n3iZ13c";
+  const contractAddress: string = "KT1XJWY8CWSsSP558Kp8nz65sTPh7pdjFiN4";
 
   const generateQrCode = (): { __html: string } => {
     const qr = qrcode(0, "L");
@@ -45,7 +42,7 @@ const App = () => {
   if (publicToken && (!userAddress || isNaN(userBalance))) {
     return (
       <div className="main-box">
-        <h1>Taquito Boilerplate</h1>
+        <h1>TezTip</h1>
         <div id="dialog">
           <header>Try the Taquito Boilerplate App!</header>
           <div id="content">
@@ -94,7 +91,7 @@ const App = () => {
   } else if (userAddress && !isNaN(userBalance)) {
     return (
       <div className="main-box">
-        <h1>Taquito Boilerplate</h1>
+        <h1>TezTip</h1>
         <div id="tabs">
           <div
             id="transfer"
@@ -125,7 +122,7 @@ const App = () => {
             ) : (
               <div id="increment-decrement">
                 <h3 className="text-align-center">
-                  Current counter: <span>{storage}</span>
+                  Current donee <span>{storage}</span>
                 </h3>
                 <UpdateContract
                   contract={contract}
@@ -139,7 +136,7 @@ const App = () => {
             <p>
               <i className="far fa-file-code"></i>&nbsp;
               <a
-                href={`https://better-call.dev/hangzhounet/${contractAddress}/operations`}
+                href={`https://better-call.dev/mainnet/${contractAddress}/operations`}
                 target="_blank"
                 rel="noopener noreferrer"
               >

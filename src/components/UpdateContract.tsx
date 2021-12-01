@@ -10,13 +10,13 @@ interface UpdateContractProps {
 }
 
 const UpdateContract = ({ contract, setUserBalance, Tezos, userAddress, setStorage }: UpdateContractProps) => {
-  const [loadingIncrement, setLoadingIncrement] = useState<boolean>(false);
-  const [loadingDecrement, setLoadingDecrement] = useState<boolean>(false);
+  const [loadingChange_Donee, setChange_Donee] = useState<boolean>(false);
+  const [loadingChange_Min_Donation, setChange_Min_Donation] = useState<boolean>(false);
 
-  const increment = async (): Promise<void> => {
-    setLoadingIncrement(true);
+  const Change_Donee = async (): Promise<void> => {
+    setChange_Donee(true);
     try {
-      const op = await contract.methods.increment(1).send();
+      const op = await contract.methods.Change_Donee('tz1i1obBJZNmMjQXHocSQwxezcSAuWYyp9cp').send();
       await op.confirmation();
       const newStorage: any = await contract.storage();
       if (newStorage) setStorage(newStorage.toNumber());
@@ -24,14 +24,14 @@ const UpdateContract = ({ contract, setUserBalance, Tezos, userAddress, setStora
     } catch (error) {
       console.log(error);
     } finally {
-      setLoadingIncrement(false);
+      setChange_Donee(false);
     }
   };
 
-  const decrement = async (): Promise<void> => {
-    setLoadingDecrement(true);
+  const Change_Min_Donation = async (): Promise<void> => {
+    setChange_Min_Donation(true);
     try {
-      const op = await contract.methods.decrement(1).send();
+      const op = await contract.methods.Change_Min_Donation(10).send();
       await op.confirmation();
       const newStorage: any = await contract.storage();
       if (newStorage) setStorage(newStorage.toNumber());
@@ -39,15 +39,15 @@ const UpdateContract = ({ contract, setUserBalance, Tezos, userAddress, setStora
     } catch (error) {
       console.log(error);
     } finally {
-      setLoadingDecrement(false);
+      setChange_Min_Donation(false);
     }
   };
 
   if (!contract && !userAddress) return <div>&nbsp;</div>;
   return (
     <div className="buttons">
-      <button className="button" disabled={loadingIncrement} onClick={increment}>
-        {loadingIncrement ? (
+      <button className="button" disabled={loadingChange_Donee} onClick={Change_Donee}>
+        {loadingChange_Donee ? (
           <span>
             <i className="fas fa-spinner fa-spin"></i>&nbsp; Please wait
           </span>
@@ -57,8 +57,8 @@ const UpdateContract = ({ contract, setUserBalance, Tezos, userAddress, setStora
           </span>
         )}
       </button>
-      <button className="button" onClick={decrement}>
-        {loadingDecrement ? (
+      <button className="button" onClick={Change_Min_Donation}>
+        {loadingChange_Min_Donation ? (
           <span>
             <i className="fas fa-spinner fa-spin"></i>&nbsp; Please wait
           </span>

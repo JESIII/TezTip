@@ -43,17 +43,18 @@ const ConnectButton = ({
     setUserBalance(balance.toNumber());
     // creates contract instance
     const contract = await Tezos.wallet.at(contractAddress);
+    console.log(contract.storage)
     const storage: any = await contract.storage();
     setContract(contract);
-    setStorage(storage.toNumber());
+    setStorage(storage);
   };
 
   const connectWallet = async (): Promise<void> => {
     try {
       await wallet.requestPermissions({
         network: {
-          type: NetworkType.HANGZHOUNET,
-          rpcUrl: "https://hangzhounet.api.tez.ie"
+          type: NetworkType.MAINNET,
+          rpcUrl: "https://mainnet.api.tez.ie"
         }
       });
       // gets user's address
@@ -86,8 +87,8 @@ const ConnectButton = ({
     (async () => {
       // creates a wallet instance
       const wallet = new BeaconWallet({
-        name: "Taquito Boilerplate",
-        preferredNetwork: NetworkType.HANGZHOUNET,
+        name: "TezTip",
+        preferredNetwork: NetworkType.MAINNET,
         disableDefaultEvents: true, // Disable all events / UI. This also disables the pairing alert.
         eventHandlers: {
           // To keep the pairing alert, we have to add the following default event handlers back
